@@ -1,6 +1,4 @@
 class Api::V1::CommentsController < Api::BaseController
-  acts_as_token_authentication_handler_for User, only: [:create, :update, :destroy]
-
   def show
     respond_with comment
   end

@@ -1,16 +1,17 @@
 class Api::V1::PostsController < Api::BaseController
-  acts_as_token_authentication_handler_for User, only: [:create, :update, :destroy]
-
   def index
     respond_with paginate(filtered_collection(Post.all))
   end
 
   def show
-    respond_with post
+    respond_with Post.find_by!(id: params[:id])
   end
 
   def create
-    respond_with post.create!(post_params)
+    new_post = Post.new(post_params)
+    new_post.author = author
+    
+    respond_with new_post.save!
   end
 
   def update
@@ -26,6 +27,10 @@ class Api::V1::PostsController < Api::BaseController
 
   def post
     @post ||= Post.find_by!(id: params[:id])
+  end
+
+  def author
+    @author ||= User.find_by!(id: params[:author][:id])
   end
 
   def post_params

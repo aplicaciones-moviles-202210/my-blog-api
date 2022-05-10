@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   scope path: '/api' do
     api_version(module: 'Api::V1', path: { value: 'v1' }, defaults: { format: 'json' }) do
-      resources :posts, only: [:index, :create]
+      resources :posts, only: [:index, :show, :create]
       resources :comments, only: [:show, :create]
       post "/login", to: "users#login"
       post "/signup", to: "users#create"

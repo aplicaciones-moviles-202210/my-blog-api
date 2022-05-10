@@ -15,7 +15,7 @@ class Api::V1::UsersController < Api::BaseController
   def login
     _user = User.find_by_email!(params[:email])
     if _user.valid_password? params[:password]
-      respond_with _user.authentication_token
+      respond_with token: _user.authentication_token, user_id: _user.id
     else
       raise ActiveRecord::RecordNotFound
     end
